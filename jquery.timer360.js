@@ -4,12 +4,12 @@
 
   $.fn.timer360 = function (options) {
     var settings = jQuery.extend({
-      radius        : 15.5,       // radius of arc
-      strokeWidth   : 3,          // the width of the stroke
-      strokeColor   : '#477050',  // the color of the stroke
-      fillColor     : '#8ac575',  // the fill color
-      interval      : 10,         // allowed to have single timer.
-      onComplete    : new Function
+      radius        : 15.5,
+      fillColor     : '#fcf8e3',
+      strokeColor   : '#d9edf7',
+      strokeWidth   : 3,
+      interval      : 10,
+      onComplete    : Function
     }, options);
 
     settings.width = (settings.radius * 2) + (settings.strokeWidth * 2);
@@ -18,17 +18,9 @@
     settings.arcY = settings.arcX;
 
     return this.each(function () {
-      var $this = $(this);
+      var canvas = $(this)[0];
       var interval = settings.interval;
       var start = null;
-
-      // Create the canvas
-      var $canvas = $('<canvas id="360timer_' + $this.attr("id") + '" width="' +
-                      settings.width + '" height="' +
-                      settings.height + '"></canvas>');
-      var canvas = $canvas[0];
-
-      $this.prepend(canvas);
 
       start = startClock(null);
 
@@ -40,7 +32,7 @@
       pen.clearRect(0,0,settings.width, settings.height);
       drawTimer(Math.PI*2, false);
 
-      var tick = function (amount) {
+      function tick (amount) {
         interval = setInterval(function() {
           var now = new Date();
           var secondsElapsed = Math.round((now.getTime() - start.getTime())/1000);
@@ -50,26 +42,28 @@
           drawTimer(Math.PI*2, false);
           if ((secondsElapsed) < (amount*60)) {
             drawTimer(incrementAmount*(secondsElapsed*1000), true);
-          } else {
-            drawTimer(Math.PI*2, true)
+          }
+          else {
+            drawTimer(Math.PI*2, true);
             clearInterval(interval);
             settings.onComplete();
           }
         }, 1000);
       }
 
-      var drawTimer = function (endAngle, drawStroke) {
+      function drawTimer (endAngle, drawStroke) {
         pen.beginPath();
         pen.arc(settings.arcX,settings.arcY,settings.radius,endAngle,0,true);
         pen.fill();
         if (drawStroke) { pen.stroke(); }
       }
 
-      var startClock = function (clock) {
+      function startClock (clock) {
         var start = new Date();
         tick(settings.interval/60);
         return start;
       }
+
     });
   };
 
