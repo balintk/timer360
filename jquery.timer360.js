@@ -9,7 +9,6 @@
 			intervals			: [5,25,30],	// the options for the timer
 			interval      : 10,         // allowed to have single timer.
 			seconds				: false,			// if false then interval is considered minutes
-			loop          : false,      // timer will loop if true
 			onComplete		: new Function
 		}, options);
 		
@@ -82,10 +81,6 @@
 						drawTimer(Math.PI*2, true)
             clearInterval(interval);
 						settings.onComplete();
-						if(settings.loop == true) {
-  						clearInterval(interval)
-						  start = start_clock(null);
-						}
           }
 				}, 1000);
 			}
