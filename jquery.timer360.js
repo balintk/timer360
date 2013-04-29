@@ -6,7 +6,6 @@
 			strokeWidth		: 3,					// the width of the stroke
 			strokeColor		: "#477050",	// the color of the stroke
 			fillColor			: "#8ac575",  // the fill color
-			intervals			: [5,25,30],	// the options for the timer
 			interval      : 10,         // allowed to have single timer.
 			seconds				: false,			// if false then interval is considered minutes
 			onComplete		: new Function
@@ -30,29 +29,7 @@
 
       $this.prepend(canvas);
 
-			if(settings.intervals != false) {
-   			var intervalItems = '';
-   			
-  			for (x in settings.intervals) {
-  				intervalItems += '<li>' + settings.intervals[x] + '</li>'
-  			}
-	
-  			var $timerSelect = $('<div class="timer_select">' +
-  													'<ul>' + intervalItems + '</ul>' + '</div>');
-      
-        $this.append($timerSelect.hide()).css({position:'relative'}).click(function () {
-  				$timerSelect.toggle();
-  			});
-  	 
-  			$timerSelect.find('li').click(function () {
-  				if (interval) { clearInterval(interval) }
-  				start = start_clock($(this));
-  			});
-      }
-      
-      if(settings.intervals == false && start == null) {
-        start = start_clock(null);
-      }
+      start = start_clock(null);
 						
 			// get context for the canvas and create the initial circle
 			var pen = canvas.getContext('2d');
@@ -61,11 +38,6 @@
       pen.fillStyle = settings.fillColor;
       pen.clearRect(0,0,settings.width, settings.height);
 			drawTimer(Math.PI*2, false);
-			
-			// attach onclick handler
-			$canvas.click(function (e) {
-				e.preventDefault();
-			});
 			
 			function tick (amount) {
 				interval = setInterval(function() {
@@ -94,11 +66,7 @@
 			
 			function start_clock(clock) {
   			var start = new Date();
-  		    if(settings.intervals != false && clock != null) {
-    			 tick(settings.seconds ? clock.text()/60 : clock.text());
-    		  } else {
-    		   tick(settings.seconds ? settings.interval/60 : settings.interval); 
-    		  }
+    		tick(settings.seconds ? settings.interval/60 : settings.interval); 
   			return start;
 			}
 			
