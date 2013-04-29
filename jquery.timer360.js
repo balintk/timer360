@@ -4,11 +4,11 @@
 
   $.fn.timer360 = function (options) {
     var settings = jQuery.extend({
-      radius        : 15.5,
       fillColor     : '#fcf8e3',
       strokeColor   : '#d9edf7',
-      strokeWidth   : 3,
-      interval      : 10,
+      radius        : 50,
+      strokeWidth   : 10,
+      interval      : 20,
       onComplete    : Function
     }, options);
 
