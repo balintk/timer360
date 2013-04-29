@@ -7,7 +7,6 @@
 			strokeColor		: "#477050",	// the color of the stroke
 			fillColor			: "#8ac575",  // the fill color
 			interval      : 10,         // allowed to have single timer.
-			seconds				: false,			// if false then interval is considered minutes
 			onComplete		: new Function
 		}, options);
 		
@@ -66,7 +65,7 @@
 			
 			function start_clock(clock) {
   			var start = new Date();
-    		tick(settings.seconds ? settings.interval/60 : settings.interval); 
+    		tick(settings.interval/60); 
   			return start;
 			}
 			
